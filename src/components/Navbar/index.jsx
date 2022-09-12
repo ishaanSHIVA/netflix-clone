@@ -20,6 +20,7 @@ import useStyles from "./styles.js";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import Sidebar from "../Sidebar";
+import Search from "../Search";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -46,7 +47,7 @@ const Navbar = () => {
           <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
-          {!isMobile && "Search..."}
+          {!isMobile && <Search />}
           <div className="">
             {!isAuthenticated ? (
               <Button color="inherit" onClick={() => {}}>
@@ -71,7 +72,7 @@ const Navbar = () => {
               </Button>
             )}
           </div>
-          {isMobile && "Search..."}
+          {isMobile && <Search />}
         </Toolbar>
       </AppBar>
       <div className="">
