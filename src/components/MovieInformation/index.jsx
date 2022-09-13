@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Box,
@@ -10,22 +10,44 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
-import { Language, Movie as MovieIcon, Theaters } from "@mui/icons-material";
+import {
+  ArrowBack,
+  Favorite,
+  FavoriteBorderOutlined,
+  Language,
+  Movie as MovieIcon,
+  PlusOne,
+  Remove,
+  Theaters,
+} from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
-import { useGetMovieQuery } from "../../services/TMDB";
+import {
+  useGetMovieQuery,
+  useGetRecomendationsQuery,
+} from "../../services/TMDB";
 import { useEffect } from "react";
 import genreIcons from "../../assets/genres";
 import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
+import MovieList from "../MovieList";
 
 const MovieInformation = () => {
   const { id } = useParams();
   const { data, error, isFetching } = useGetMovieQuery(id);
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
+  const isMovieFav = true;
+  const isMovieWashlist = true;
+
+  const { data: recomendationData, isFetching: recomendationDataIsFetching } =
+    useGetRecomendationsQuery({ list: "/recommendations", movie_id: id });
 
   const dispatch = useDispatch();
+
+  console.log(recomendationData);
 
   if (isFetching) {
     return (
@@ -154,14 +176,82 @@ const MovieInformation = () => {
                 >
                   IMDB
                 </Button>
-                <Button onClick={() => {}} href="#" endIcon={<Theaters />}>
+                <Button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                  href="#"
+                  endIcon={<Theaters />}
+                >
                   Trailer
+                </Button>
+              </ButtonGroup>
+            </Grid>
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+              <ButtonGroup size="medium" variant="outlined">
+                <Button
+                  onClick={() => {}}
+                  endIcon={
+                    isMovieFav ? <FavoriteBorderOutlined /> : <Favorite />
+                  }
+                >
+                  {isMovieFav ? "UNFAVOURITE" : "FAVOURITE"}{" "}
+                </Button>
+                <Button
+                  onClick={() => {}}
+                  endIcon={isMovieWashlist ? <Remove /> : <PlusOne />}
+                >
+                  WashList
+                </Button>
+                <Button
+                  style={{ textDecoration: "none" }}
+                  endIcon={<ArrowBack />}
+                  sx={{ border: "primary.main" }}
+                >
+                  <Typography
+                    component={Link}
+                    to="/"
+                    color="inherit"
+                    variant="subtitle2"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Back
+                  </Typography>
                 </Button>
               </ButtonGroup>
             </Grid>
           </div>
         </Grid>
       </Grid>
+
+      <Box marginTop={"5rem"} width="100%">
+        <Typography variant="h3" gutterBottom align="center">
+          You might also like
+        </Typography>
+        {recomendationData ? (
+          <MovieList movies={recomendationData} numberOfMovies={12} />
+        ) : (
+          <Box>Nothing was found </Box>
+        )}
+      </Box>
+      {console.log("DATA ", data?.videos?.results[0].key)}
+
+      <Modal
+        closeAfterTransition
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {data?.videos?.results?.length > 0 && (
+          <iframe
+            autoPlay
+            className={classes.videos}
+            title="Trailer"
+            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+            allow="autoPlay"
+          />
+        )}
+      </Modal>
     </Grid>
   );
 };
