@@ -18,15 +18,15 @@ const App = () => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route exact path="/" component={Profile} />
-          <Route exact path="/movies/:id">
+          <Route exact path="/" component={Movies} />
+          <Route exact path="/movie/:id">
             <MovieInformation></MovieInformation>
           </Route>
           <Route exact path="/actors/:id">
             <Actors></Actors>
           </Route>
-          <Route path="/movies" exact>
-            <Movies></Movies>
+          <Route exact path="/profile/:id">
+            <Profile></Profile>
           </Route>
         </Switch>
       </main>

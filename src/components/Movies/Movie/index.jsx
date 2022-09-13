@@ -6,7 +6,6 @@ import useStyles from "./styles";
 
 const Movie = ({ movie, index }) => {
   const classes = useStyles();
-  console.log(`https://image.tmdb.org/t/p/w500${movie.poster_path}`);
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} x={2} className={classes.movie}>
       <Grow in key={index} timeout={(index + 1) * 250}>
