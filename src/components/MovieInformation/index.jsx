@@ -39,9 +39,6 @@ const MovieInformation = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
-  const isMovieFav = true;
-  const isMovieWashlist = true;
-
   const { data: recomendationData, isFetching: recomendationDataIsFetching } =
     useGetRecomendationsQuery({ list: "/recommendations", movie_id: id });
 
@@ -189,20 +186,6 @@ const MovieInformation = () => {
             </Grid>
             <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
               <ButtonGroup size="medium" variant="outlined">
-                <Button
-                  onClick={() => {}}
-                  endIcon={
-                    isMovieFav ? <FavoriteBorderOutlined /> : <Favorite />
-                  }
-                >
-                  {isMovieFav ? "UNFAVOURITE" : "FAVOURITE"}{" "}
-                </Button>
-                <Button
-                  onClick={() => {}}
-                  endIcon={isMovieWashlist ? <Remove /> : <PlusOne />}
-                >
-                  WashList
-                </Button>
                 <Button
                   style={{ textDecoration: "none" }}
                   endIcon={<ArrowBack />}

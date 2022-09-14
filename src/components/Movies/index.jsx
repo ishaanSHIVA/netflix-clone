@@ -6,8 +6,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useGetMoviesQuery } from "../../services/TMDB";
-import MovieList from "./MovieList";
+import MovieList from "../MovieList";
 import { useSelector } from "react-redux";
+import Pagination from "../Pagination";
 
 const Movies = () => {
   const [page, setPage] = useState(1);
@@ -51,6 +52,11 @@ const Movies = () => {
   return (
     <div className="">
       <MovieList movies={data ? data : null}></MovieList>
+      <Pagination
+        currentPage={page}
+        setPage={setPage}
+        totalPages={data?.total_pages}
+      ></Pagination>
     </div>
   );
 };

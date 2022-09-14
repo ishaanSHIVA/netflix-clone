@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useRef } from "react";
 import { CssBaseline } from "@mui/material";
 import { Route, Switch } from "react-router-dom";
 
-import { MovieInformation, Actors, Movies, Navbar, Profile } from "./";
+import { MovieInformation, Actor, Movies, Navbar, Profile } from "./";
 
 import useStyles from "./styles.js";
+import useAlan from "./Alan";
 
 //  / -> root -> all movies
 // /awei -> movie information
 
 const App = () => {
   const classes = useStyles();
+  const alanBtn = useRef();
+  useAlan();
   return (
     <div className={classes.root}>
       <CssBaseline></CssBaseline>
@@ -23,13 +26,14 @@ const App = () => {
             <MovieInformation></MovieInformation>
           </Route>
           <Route exact path="/actors/:id">
-            <Actors></Actors>
+            <Actor></Actor>
           </Route>
           <Route exact path="/profile/:id">
             <Profile></Profile>
           </Route>
         </Switch>
       </main>
+      <div ref={alanBtn}></div>
     </div>
   );
 };

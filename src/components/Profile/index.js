@@ -4,15 +4,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../features/auth";
 
+export const Logout = () => {
+  localStorage.clear();
+  window.location.href = "/";
+};
+
 const Profile = () => {
   const { user, isAuthenticated } = useSelector(userSelector);
 
   const favMovies = [];
 
-  const logout = () => {
-    localStorage.clear();
-    window.location.href = "/";
-  };
   return (
     <Box>
       <Box display={"flex"} justifyContent="space-between">
@@ -20,7 +21,7 @@ const Profile = () => {
           My Profile
         </Typography>
         {isAuthenticated && (
-          <Button color="inherit" onClick={logout}>
+          <Button color="inherit" onClick={Logout}>
             Logout &nbsp; <ExitToApp />
           </Button>
         )}
