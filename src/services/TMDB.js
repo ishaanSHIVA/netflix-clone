@@ -18,7 +18,7 @@ export const tmdbApi = createApi({
     getMovies: builder.query({
       query: ({ genreIdOrCategoryName, page, searchQuery }) => {
         if (searchQuery) {
-          return `search/movie/?query=${searchQuery}&api_key=${TMDBAPI}&page=${page}`;
+          return `search/company/?query=${searchQuery}&api_key=${TMDBAPI}&page=${page}`;
         }
         if (
           genreIdOrCategoryName &&
